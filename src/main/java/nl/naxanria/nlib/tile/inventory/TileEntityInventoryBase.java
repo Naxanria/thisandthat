@@ -12,6 +12,8 @@ import nl.naxanria.nlib.tile.TileEntityBase;
 import nl.naxanria.nlib.tile.TileFlags;
 import nl.naxanria.nlib.util.CollectionUtil;
 import nl.naxanria.nlib.util.EnumHelper;
+import nl.naxanria.nlib.util.logging.Log;
+import nl.naxanria.nlib.util.logging.LogColor;
 
 public abstract class TileEntityInventoryBase extends TileEntityBase implements IInventoryHolder
 {

@@ -139,16 +139,21 @@ public abstract class ContainerBase<TTE extends TileEntityBase> extends Containe
   
   public SlotHandleState handleSpecialSlots(EntityPlayer player, ItemStack stack)
   {
+    SlotHandleState state = SlotHandleState.INVALID;
     for (int i = 0; i < INVENTORY_START; i++)
     {
       Slot insert = inventorySlots.get(i);
       if (insert.isItemValid(stack))
       {
-        return mergeItemStack(stack, i, i + 1, false) ? SlotHandleState.SUCCESS : SlotHandleState.FAILURE;
+        state = mergeItemStack(stack, i, i + 1, false) ? SlotHandleState.SUCCESS : SlotHandleState.FAILURE;
+        if (state == SlotHandleState.SUCCESS)
+        {
+          return state;
+        }
       }
     }
     
-    return SlotHandleState.INVALID;
+    return state;
   }
   
   

@@ -1,10 +1,14 @@
 package nl.naxanria.thisandthat.container;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 import nl.naxanria.nlib.container.ContainerBase;
 import nl.naxanria.nlib.inventory.ItemStackHandlerBase;
+import nl.naxanria.nlib.util.logging.Log;
 import nl.naxanria.thisandthat.tile.TileEntityPrimitiveFurnace;
+
+import javax.annotation.Nonnull;
 
 public class ContainerFurnacePrimitive extends ContainerBase<TileEntityPrimitiveFurnace>
 {
@@ -41,6 +45,24 @@ public class ContainerFurnacePrimitive extends ContainerBase<TileEntityPrimitive
   
     addSlotToContainer
       (
+        new SlotItemHandler(inventory, TileEntityPrimitiveFurnace.SLOT_FUEL, x + step * 2, y + step * 2)
+        {
+          @Override
+          public void onSlotChanged()
+          {
+            tile.markDirty();
+          }
+        
+          @Override
+          public boolean isItemValid(@Nonnull ItemStack stack)
+          {
+            return tile.isItemValidForSlot(stack, getSlotIndex());
+          }
+        }
+      );
+  
+    addSlotToContainer
+      (
         new SlotItemHandler(inventory, TileEntityPrimitiveFurnace.SLOT_SMELT0, x, y)
         {
           @Override
@@ -48,7 +70,15 @@ public class ContainerFurnacePrimitive extends ContainerBase<TileEntityPrimitive
           {
             tile.markDirty();
           }
+  
+          @Override
+          public boolean isItemValid(@Nonnull ItemStack stack)
+          {
+            return tile.isItemValidForSlot(stack, getSlotIndex());
+          }
         }
+        
+        
       );
   
     addSlotToContainer
@@ -60,17 +90,11 @@ public class ContainerFurnacePrimitive extends ContainerBase<TileEntityPrimitive
           {
             tile.markDirty();
           }
-        }
-      );
   
-    addSlotToContainer
-      (
-        new SlotItemHandler(inventory, TileEntityPrimitiveFurnace.SLOT_FUEL, x + step * 2, y + step * 2)
-        {
           @Override
-          public void onSlotChanged()
+          public boolean isItemValid(@Nonnull ItemStack stack)
           {
-            tile.markDirty();
+            return tile.isItemValidForSlot(stack, getSlotIndex());
           }
         }
       );
@@ -84,6 +108,12 @@ public class ContainerFurnacePrimitive extends ContainerBase<TileEntityPrimitive
           {
             tile.markDirty();
           }
+  
+          @Override
+          public boolean isItemValid(@Nonnull ItemStack stack)
+          {
+            return tile.isItemValidForSlot(stack, getSlotIndex());
+          }
         }
       );
   
@@ -95,6 +125,12 @@ public class ContainerFurnacePrimitive extends ContainerBase<TileEntityPrimitive
           public void onSlotChanged()
           {
             tile.markDirty();
+          }
+  
+          @Override
+          public boolean isItemValid(@Nonnull ItemStack stack)
+          {
+            return tile.isItemValidForSlot(stack, getSlotIndex());
           }
         }
       );

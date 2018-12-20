@@ -10,18 +10,21 @@ import nl.naxanria.nlib.tile.inventory.TileEntityInventoryBase;
 import nl.naxanria.nlib.util.CompoundHelper;
 import nl.naxanria.nlib.util.FurnaceHelper;
 import nl.naxanria.nlib.util.StackUtil;
+import nl.naxanria.nlib.util.logging.Log;
+import nl.naxanria.nlib.util.logging.LogColor;
 import nl.naxanria.thisandthat.util.ModRegistry;
 
 public class TileEntityPrimitiveFurnace extends TileEntityInventoryBase
 {
-  public static final int SLOT_SMELT0 = 0;
-  public static final int SLOT_SMELT1 = 1;
-  public static final int SLOT_FUEL = 2;
-  public static final int SLOT_OUTPUT0 = 3;
-  public static final int SLOT_OUTPUT1 = 4;
+  private static int idx = 0;
+  
+  public static final int SLOT_FUEL = idx++;
+  public static final int SLOT_SMELT0 = idx++;
+  public static final int SLOT_SMELT1 = idx++;
+  public static final int SLOT_OUTPUT0 = idx++;
+  public static final int SLOT_OUTPUT1 = idx++;
   
   private final CompoundHelper helper;
-  
   
   private int furnaceBurnTime;
   private int totalFurnaceBurnTime;
@@ -77,6 +80,12 @@ public class TileEntityPrimitiveFurnace extends TileEntityInventoryBase
   }
   
   @Override
+  public boolean isItemValidForSlot(ItemStack stack, int slot)
+  {
+    return validForSlot(slot, stack);
+  }
+  
+  @Override
   protected void entityUpdate()
   {
     super.entityUpdate();
@@ -87,14 +96,6 @@ public class TileEntityPrimitiveFurnace extends TileEntityInventoryBase
     {
       IBlockState state = world.getBlockState(pos.down());
       int burnTimeDelay = ModRegistry.getFurnaceModifier(state.getBlock());
-//      if (state.getBlock() == Blocks.FIRE)
-//      {
-//        burnTimeDelay = 2;
-//      }
-//      else if (state.getBlock() == Blocks.LAVA)
-//      {
-//        burnTimeDelay = 3;
-//      }
       
       if (burnTimeDelay == 0 || ticksPassed % burnTimeDelay == 0)
       {
@@ -178,6 +179,10 @@ public class TileEntityPrimitiveFurnace extends TileEntityInventoryBase
           cookTime = 0;
         }
         
+      }
+      else
+      {
+        cookTime = 0;
       }
       
       if (dirty)
