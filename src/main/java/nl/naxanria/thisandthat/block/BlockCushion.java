@@ -5,15 +5,19 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import nl.naxanria.nlib.block.BlockBase;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class BlockCushion extends BlockBase
 {
@@ -55,6 +59,12 @@ public class BlockCushion extends BlockBase
     return false;
   }
   
+  @Override
+  public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced)
+  {
+    tooltip.add(TextFormatting.YELLOW + "Adds less splat to your falling.");
+    super.addInformation(stack, player, tooltip, advanced);
+  }
   
   @Nullable
   @Override

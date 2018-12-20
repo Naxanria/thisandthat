@@ -64,47 +64,34 @@ public class BlockPrimitiveFurnace extends BlockTileGuiBase<TileEntityPrimitiveF
   {
     tooltip.add(TextFormatting.YELLOW + "A slightly better furnace");
   }
-  
-  public static void setState(boolean active, World world, BlockPos pos)
-  {
-    IBlockState iblockstate = world.getBlockState(pos);
-    TileEntity te = world.getTileEntity(pos);
-    keepInventory = true;
-    
-    world.setBlockState(pos, BlocksInit.Furnace.FURNACE_PRIMITIVE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)));
-    
-    keepInventory = true;
-    
-    if (te != null)
-    {
-      te.validate();
-      world.setTileEntity(pos, te);
-    }
-  }
+//
+//  public static void setState(boolean active, World world, BlockPos pos)
+//  {
+//    IBlockState iblockstate = world.getBlockState(pos);
+//    TileEntity te = world.getTileEntity(pos);
+//    keepInventory = true;
+//
+//    world.setBlockState(pos, BlocksInit.Furnace.FURNACE_PRIMITIVE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)));
+//
+//    keepInventory = true;
+//
+//    if (te != null)
+//    {
+//      te.validate();
+//      world.setTileEntity(pos, te);
+//    }
+//  }
   
   @Override
   public int damageDropped(IBlockState state)
   {
-    return 0; //getMetaFromState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
-  }
-  
-  @Override
-  public EnumBlockRenderType getRenderType(IBlockState state)
-  {
-    return EnumBlockRenderType.MODEL;
-  }
-  
-  public BlockRenderLayer getBlockRenderLayer()
-  {
-    return BlockRenderLayer.SOLID;
+    return 0;
   }
   
   @Override
   public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
   {
     return new ItemStack(Item.getItemFromBlock(this), 1, getMetaFromState(world.getBlockState(pos)) / EnumFacing.values().length);
-    
-    //return super.getPickBlock(state, target, world, pos, player);
   }
   
   @Override
@@ -140,25 +127,25 @@ public class BlockPrimitiveFurnace extends BlockTileGuiBase<TileEntityPrimitiveF
   private void setDefaultFacing(World world, BlockPos pos, IBlockState state) {
     if (!world.isRemote)
     {
-      IBlockState iblockstate = world.getBlockState(pos.north());
-      IBlockState iblockstate1 = world.getBlockState(pos.south());
-      IBlockState iblockstate2 = world.getBlockState(pos.west());
-      IBlockState iblockstate3 = world.getBlockState(pos.east());
+      IBlockState northState = world.getBlockState(pos.north());
+      IBlockState southState = world.getBlockState(pos.south());
+      IBlockState westState = world.getBlockState(pos.west());
+      IBlockState eastState = world.getBlockState(pos.east());
       EnumFacing enumfacing = state.getValue(FACING);
       
-      if (enumfacing == EnumFacing.NORTH && iblockstate.isFullBlock() && !iblockstate1.isFullBlock())
+      if (enumfacing == EnumFacing.NORTH && northState.isFullBlock() && !southState.isFullBlock())
       {
         enumfacing = EnumFacing.SOUTH;
       }
-      else if (enumfacing == EnumFacing.SOUTH && iblockstate1.isFullBlock() && !iblockstate.isFullBlock())
+      else if (enumfacing == EnumFacing.SOUTH && southState.isFullBlock() && !northState.isFullBlock())
       {
         enumfacing = EnumFacing.NORTH;
       }
-      else if (enumfacing == EnumFacing.WEST && iblockstate2.isFullBlock() && !iblockstate3.isFullBlock())
+      else if (enumfacing == EnumFacing.WEST && westState.isFullBlock() && !eastState.isFullBlock())
       {
         enumfacing = EnumFacing.EAST;
       }
-      else if (enumfacing == EnumFacing.EAST && iblockstate3.isFullBlock() && !iblockstate2.isFullBlock())
+      else if (enumfacing == EnumFacing.EAST && eastState.isFullBlock() && !westState.isFullBlock())
       {
         enumfacing = EnumFacing.WEST;
       }
@@ -176,8 +163,6 @@ public class BlockPrimitiveFurnace extends BlockTileGuiBase<TileEntityPrimitiveF
   {
     return state.withRotation(mirror.toRotation(state.getValue(FACING)));
   }
-  
-  
   
   public void onBlockAdded(World world, BlockPos pos, IBlockState state)
   {
