@@ -9,8 +9,8 @@ public class BlocksInit
 {
   public static class Metals
   {
-    public static final BlockBase BLOCK_PRIMITIVE = new BlockBase(Material.IRON, "block_primitive");
-    public static final BlockBase BLOCK_BASIC = new BlockBase(Material.IRON, "block_basic");
+    public static final BlockBase BLOCK_PRIMITIVE = (BlockBase) new BlockBase(Material.IRON, "block_primitive").setHardness(6);
+    public static final BlockBase BLOCK_BASIC = (BlockBase) new BlockBase(Material.IRON, "block_basic").setHardness(8);
   }
   
   public static class Furnace

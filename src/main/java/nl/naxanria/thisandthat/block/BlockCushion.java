@@ -15,6 +15,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import nl.naxanria.nlib.block.BlockBase;
+import nl.naxanria.nlib.util.logging.Log;
+import nl.naxanria.nlib.util.logging.LogColor;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -51,6 +53,8 @@ public class BlockCushion extends BlockBase
       }
     },
       "block_cushion");
+    
+    setHardness(1);
   }
   
   @Override
