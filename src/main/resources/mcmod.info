@@ -1,0 +1,16 @@
+[
+{
+  "modid": "tat",
+  "name": "This and that",
+  "description": "A bunch of things.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Naxanria"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
