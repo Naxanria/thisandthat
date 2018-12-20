@@ -49,7 +49,7 @@ public class BlockPrimitiveFurnace extends BlockTileGuiBase<TileEntityPrimitiveF
   @Override
   public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
   {
-    return new ItemStack(BlocksInit.Furnace.FURNACE_PRIMITIVE);
+    return new ItemStack(BlocksInit.Furnace.FURNACE_PRIMITIVE, 1, 0);
   }
   
   @Override
@@ -85,7 +85,7 @@ public class BlockPrimitiveFurnace extends BlockTileGuiBase<TileEntityPrimitiveF
   @Override
   public int damageDropped(IBlockState state)
   {
-    return getMetaFromState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
+    return 0; //getMetaFromState(getDefaultState().withProperty(FACING, EnumFacing.NORTH));
   }
   
   @Override
