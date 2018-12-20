@@ -7,7 +7,7 @@
   },
   "variants": {
     "normal": {
-      "model": "cube_all"
+      "model": "tat:block_no_cull"
     },
     "inventory": {
       "model": "cube_all"

@@ -54,6 +54,14 @@ public class BlockCushion extends BlockBase
   }
   
   @Override
+  public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face)
+  {
+    return true; // super.doesSideBlockRendering(state, world, pos, face);
+  }
+  
+  
+  
+  @Override
   public boolean canEntitySpawn(IBlockState state, Entity entityIn)
   {
     return false;
