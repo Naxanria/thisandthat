@@ -1,6 +1,7 @@
 package nl.naxanria.nlib.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -102,5 +103,19 @@ public class WorldUtil
   {
     EntityItem toDrop = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
     world.spawnEntity(toDrop);
+  }
+  
+  public static IBlockState[] getBlockStatesAround(World world, BlockPos pos)
+  {
+    IBlockState[] states = new IBlockState[6];
+    
+    states[EnumFacing.DOWN.getIndex()] = world.getBlockState(pos.down());
+    states[EnumFacing.UP.getIndex()] = world.getBlockState(pos.up());
+    states[EnumFacing.NORTH.getIndex()] = world.getBlockState(pos.north());
+    states[EnumFacing.SOUTH.getIndex()] = world.getBlockState(pos.south());
+    states[EnumFacing.WEST.getIndex()] = world.getBlockState(pos.west());
+    states[EnumFacing.EAST.getIndex()] = world.getBlockState(pos.east());
+    
+    return states;
   }
 }

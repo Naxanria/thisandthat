@@ -25,6 +25,11 @@ public abstract class TileEntityFluidTankBase extends TileEntityBase implements 
     tank = new FluidTank(capacity);
   }
   
+  public TileEntityFluidTankBase(int capacity, Fluid filter)
+  {
+    tank = new FluidFilteredTank(capacity, filter);
+  }
+  
   @Override
   public int getFluidToShare()
   {

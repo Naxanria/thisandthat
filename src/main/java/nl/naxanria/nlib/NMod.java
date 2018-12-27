@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import nl.naxanria.nlib.registry.BlockRegistry;
+import nl.naxanria.nlib.registry.FluidRegistry;
 import nl.naxanria.nlib.registry.ItemRegistry;
 import nl.naxanria.nlib.registry.RecipeRegistry;
 import nl.naxanria.nlib.network.PacketHandler;
@@ -74,6 +75,10 @@ public abstract class NMod
   protected abstract Class getBlockClass();
   protected abstract Class getItemClass();
   protected abstract Class getRecipeClass();
+  protected Class getFluidClass()
+  {
+    return null;
+  }
   
   public abstract String modId();
   public abstract String modName();
@@ -82,6 +87,7 @@ public abstract class NMod
   protected BlockRegistry blockRegistry = new BlockRegistry();
   protected ItemRegistry itemRegistry = new ItemRegistry();
   protected RecipeRegistry recipeRegistry = new RecipeRegistry();
+  protected FluidRegistry fluidRegistry = new FluidRegistry();
   
   /**
    * This is the first initialization event. Register tile entities here.
@@ -138,12 +144,21 @@ public abstract class NMod
     try
     {
       Class argClass = (arg != null) ? arg.getClass() : null;
-      Method method = c.getMethod("init", argClass);
-      method.invoke(null, arg);
+      Method method;
+      if (argClass == null)
+      {
+        method = c.getMethod("init");
+        method.invoke(null);
+      }
+      else
+      {
+        method = c.getMethod("init", argClass);
+        method.invoke(null, arg);
+      }
     }
     catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e)
     {
-      Log.error(c.getName() + " has no init(" + arg.getClass().getName() + ") method!");
+      Log.error(c.getName() + " has no init(" + ((arg == null) ? "void" : arg.getClass().getName()) + ") method!");
       e.printStackTrace();
 
     }
@@ -162,6 +177,11 @@ public abstract class NMod
   private static void initRecipeClass()
   {
     initClass(instance.getRecipeClass(), instance.recipeRegistry);
+  }
+  
+  private static void initFluidClass()
+  {
+    initClass(instance.getFluidClass(), instance.fluidRegistry);
   }
   
   public abstract void onServerStarting(FMLServerStartingEvent event);
@@ -183,6 +203,9 @@ public abstract class NMod
     {
       initBlockClass();
       instance.blockRegistry.registerAll(event.getRegistry());
+      
+      initFluidClass();
+      instance.fluidRegistry.registerAllFluidBlocks(event.getRegistry());
     }
     
     @SubscribeEvent

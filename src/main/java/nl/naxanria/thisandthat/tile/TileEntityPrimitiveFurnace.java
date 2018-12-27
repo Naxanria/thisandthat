@@ -14,6 +14,7 @@ import nl.naxanria.nlib.util.logging.Log;
 import nl.naxanria.nlib.util.logging.LogColor;
 import nl.naxanria.thisandthat.util.ModRegistry;
 
+@SuppressWarnings("unchecked")
 public class TileEntityPrimitiveFurnace extends TileEntityInventoryBase
 {
   private static int idx = 0;
@@ -37,7 +38,7 @@ public class TileEntityPrimitiveFurnace extends TileEntityInventoryBase
   {
     super(5);
     
-    helper = new CompoundHelper()
+    helper = CompoundHelper.Int()
     .create
       (
         "FurnaceBurnTime",
@@ -95,7 +96,7 @@ public class TileEntityPrimitiveFurnace extends TileEntityInventoryBase
     if (isBurning())
     {
       IBlockState state = world.getBlockState(pos.down());
-      int burnTimeDelay = ModRegistry.getFurnaceModifier(state.getBlock());
+      int burnTimeDelay = ModRegistry.Furnace.getFurnaceModifier(state.getBlock());
       
       if (burnTimeDelay == 0 || ticksPassed % burnTimeDelay == 0)
       {

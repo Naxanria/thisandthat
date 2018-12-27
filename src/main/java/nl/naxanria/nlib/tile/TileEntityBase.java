@@ -27,6 +27,7 @@ import nl.naxanria.nlib.network.PacketServerToClient;
 import nl.naxanria.nlib.tile.fluid.IFluidSharingProvider;
 import nl.naxanria.nlib.tile.inventory.IInventoryHolder;
 import nl.naxanria.nlib.tile.power.IEnergySharingProvider;
+import nl.naxanria.nlib.util.CompoundHelper;
 import nl.naxanria.nlib.util.EnumHelper;
 import nl.naxanria.nlib.util.Flags;
 import nl.naxanria.nlib.util.player.PlayerHelper;
@@ -136,7 +137,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable
   }
   
   @Override
-  public void update()
+  public final void update()
   {
     ticksPassed++;
     

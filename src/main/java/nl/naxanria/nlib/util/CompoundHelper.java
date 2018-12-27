@@ -6,15 +6,15 @@ import java.util.HashMap;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class CompoundHelper
+public abstract class CompoundHelper<T>
 {
-  private class CompoundInfo
+  private class CompoundInfo<TInternal>
   {
     public final String name;
-    public final Consumer<Integer> writer;
-    public final Supplier<Integer> reader;
+    public final Consumer<TInternal> writer;
+    public final Supplier<TInternal> reader;
   
-    public CompoundInfo(String name, Consumer<Integer> writer, Supplier<Integer> reader)
+    public CompoundInfo(String name, Consumer<TInternal> writer, Supplier<TInternal> reader)
     {
       this.name = name;
       this.writer = writer;
@@ -24,12 +24,12 @@ public class CompoundHelper
   
   private HashMap<String, CompoundInfo> sync = new HashMap<>();
   
-  public CompoundHelper()
+  protected CompoundHelper()
   { }
   
-  public CompoundHelper create(String name, Supplier<Integer> reader, Consumer<Integer> writer)
+  public CompoundHelper<T> create(String name, Supplier<T> reader, Consumer<T> writer)
   {
-    CompoundInfo info = new CompoundInfo(name, writer, reader);
+    CompoundInfo info = new CompoundInfo<T>(name, writer, reader);
     
     sync.put(name, info);
     
@@ -41,7 +41,7 @@ public class CompoundHelper
     for (CompoundInfo info :
       sync.values())
     {
-      compound.setInteger(info.name, info.reader.get());
+      write(compound, info.name, (T) info.reader.get());
     }
   }
   
@@ -50,7 +50,64 @@ public class CompoundHelper
     for (CompoundInfo info :
       sync.values())
     {
-      info.writer.accept(compound.getInteger(info.name));
+      info.writer.accept(read(compound, info.name));
     }
+  }
+  
+  protected abstract void write(NBTTagCompound compound, String name, T val);
+  protected abstract T read(NBTTagCompound compound, String name);
+  
+  public static CompoundHelper<Integer> Int()
+  {
+    return new CompoundHelper<Integer>()
+    {
+      @Override
+      protected void write(NBTTagCompound compound, String name, Integer val)
+      {
+        compound.setInteger(name, val);
+      }
+  
+      @Override
+      protected Integer read(NBTTagCompound compound, String name)
+      {
+        return compound.getInteger(name);
+      }
+    };
+  }
+  
+  public static CompoundHelper<String> Str()
+  {
+    return new CompoundHelper<String>()
+    {
+      @Override
+      protected void write(NBTTagCompound compound, String name, String val)
+      {
+        compound.setString(name, val);
+      }
+  
+      @Override
+      protected String read(NBTTagCompound compound, String name)
+      {
+        return compound.getString(name);
+      }
+    };
+  }
+  
+  public static CompoundHelper<Float> Float()
+  {
+    return new CompoundHelper<Float>()
+    {
+      @Override
+      protected void write(NBTTagCompound compound, String name, Float val)
+      {
+        compound.setFloat(name, val);
+      }
+  
+      @Override
+      protected Float read(NBTTagCompound compound, String name)
+      {
+        return compound.getFloat(name);
+      }
+    };
   }
 }

@@ -4,6 +4,8 @@ import net.minecraft.block.material.Material;
 import nl.naxanria.nlib.block.BlockBase;
 import nl.naxanria.nlib.registry.BlockRegistry;
 import nl.naxanria.thisandthat.block.machines.BlockPrimitiveFurnace;
+import nl.naxanria.thisandthat.block.machines.generators.BlockSteamGenerator;
+import nl.naxanria.thisandthat.block.machines.generators.BlockSteamProducer;
 
 public class BlocksInit
 {
@@ -16,6 +18,12 @@ public class BlocksInit
   public static class Furnace
   {
     public static final BlockPrimitiveFurnace FURNACE_PRIMITIVE = new BlockPrimitiveFurnace();
+  }
+  
+  public static class Machines
+  {
+    public static final BlockSteamProducer STEAM_PRODUCER = new BlockSteamProducer();
+    public static final BlockSteamGenerator STEAM_GENERATOR = new BlockSteamGenerator();
   }
   
   public static class Misc
@@ -31,6 +39,9 @@ public class BlocksInit
       
       Metals.BLOCK_PRIMITIVE,
       Metals.BLOCK_BASIC,
+      
+      Machines.STEAM_PRODUCER,
+      Machines.STEAM_GENERATOR,
       
       Misc.BLOCK_CUSHION
     );
