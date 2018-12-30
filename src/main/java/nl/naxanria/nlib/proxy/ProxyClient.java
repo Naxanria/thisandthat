@@ -6,7 +6,9 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import nl.naxanria.nlib.NMod;
+import nl.naxanria.nlib.event.ClientEvents;
 import nl.naxanria.nlib.tile.TileEntityBase;
 import nl.naxanria.nlib.util.logging.Log;
 
@@ -42,4 +44,10 @@ public class ProxyClient extends Proxy
             Log.error("Unable to register renderer for " + tileEntityClass.toString() + e);
         }
     }
+  
+  @Override
+  public void init(FMLInitializationEvent event)
+  {
+    new ClientEvents();
+  }
 }

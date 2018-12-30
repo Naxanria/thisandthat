@@ -114,6 +114,7 @@ public abstract class NMod
     
     initRecipeClass();
     
+    
     onInit(event);
   }
   

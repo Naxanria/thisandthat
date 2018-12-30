@@ -142,7 +142,7 @@ public class TileEntitySteamProducer extends TileEntityFluidTankBase
       float produce = (temperature / temperatureMax) * (generateRateMax * ((info == null) ? 1 : info.produceModifier)) * waterCountMultiplier;
       
       
-      Log.info(LogColor.PURPLE, "t=" + temperature + ",td=" + diff + ",w=" + waterCount + ",l=" + lavaCount + ",p=" + produce + ",wc=" + waterCountMultiplier);
+//      Log.info(LogColor.PURPLE, "t=" + temperature + ",td=" + diff + ",w=" + waterCount + ",l=" + lavaCount + ",p=" + produce + ",wc=" + waterCountMultiplier);
       
       
 //      if (waterCount > lavaCount)
@@ -157,8 +157,9 @@ public class TileEntitySteamProducer extends TileEntityFluidTankBase
         FluidStack fluidStack = new FluidStack(FluidInit.STEAM, (int) produce);
         
         tank.setCanFill(true);
+        int f = tank.fill(fluidStack, true);
   
-        Log.info("filled: " + tank.fill(fluidStack, true));
+//        Log.info("filled: " + f);
         
         tank.setCanFill(false);
       }

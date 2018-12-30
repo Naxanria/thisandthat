@@ -108,7 +108,7 @@ public class TAT extends NMod
   @Override
   protected void onInit(FMLInitializationEvent event)
   {
-    super.onInit(event);
+    proxy.init(event);
   }
   
   @Override

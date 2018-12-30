@@ -8,13 +8,18 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import nl.naxanria.nlib.block.BlockTileBase;
+import nl.naxanria.nlib.block.IEnergyDisplay;
+import nl.naxanria.nlib.util.logging.Log;
 import nl.naxanria.thisandthat.tile.generators.TileEntitySteamGenerator;
 
 import javax.annotation.Nullable;
 
-public class BlockSteamGenerator extends BlockTileBase<TileEntitySteamGenerator>
+public class BlockSteamGenerator extends BlockTileBase<TileEntitySteamGenerator> implements IEnergyDisplay
 {
   public BlockSteamGenerator()
   {
@@ -52,5 +57,18 @@ public class BlockSteamGenerator extends BlockTileBase<TileEntitySteamGenerator>
   public Class<TileEntitySteamGenerator> getTileEntityClass()
   {
     return TileEntitySteamGenerator.class;
+  }
+  
+  @Override
+  @SideOnly(Side.CLIENT)
+  public EnergyStorage getStorageToDisplay(World world, IBlockState state, BlockPos pos)
+  {
+//    EnergyStorage storage = getTileEntity(world, pos).getEnergyStorage();
+//
+//    Log.info(String.format("Storage: %d / %d", storage.getEnergyStored(), storage.getMaxEnergyStored()));
+//
+//    return storage;
+    
+    return null;
   }
 }

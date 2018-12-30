@@ -1,6 +1,7 @@
 package nl.naxanria.nlib.proxy;
 
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import nl.naxanria.nlib.tile.TileEntityBase;
 
 public abstract class Proxy
@@ -50,4 +51,7 @@ public abstract class Proxy
   public <TE extends TileEntityBase> void registerTileEntityRender(Class<TE> tileEntityClass, String tileEntityRendererClass)
   {
   }
+  
+  public void init(FMLInitializationEvent event)
+  { }
 }
